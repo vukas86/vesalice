@@ -9,18 +9,18 @@ let img = document.createElement("img");
 let counter = 0;
 
 btnCounterElement.addEventListener("click", (e) => {
-  if (counter < 6) {
+  e.preventDefault();
+  if (counter <= 5) {
     counter++;
     counterElement.textContent = counter;
     document.querySelector(".firstImage").style.display = "none";
-
     img.src = `images/vesalice_${counter}.png`;
     containerElement.prepend(img);
-    console.log(img);
-  } else if ((counter = 6)) {
+  } else {
     modalElement.style.display = "";
   }
 });
+console.log(counter);
 
 btnResetElement.addEventListener("click", (e) => {
   e.preventDefault();
