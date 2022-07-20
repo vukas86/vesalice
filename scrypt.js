@@ -3,6 +3,7 @@ const btnResetElement = document.getElementById("btn-reset");
 let counterElement = document.querySelector(".counter");
 const containerElement = document.querySelector(".container");
 const modalElement = document.querySelector(".overlay");
+modalElement.style.display = "none";
 let img = document.createElement("img");
 
 let counter = 0;
@@ -18,12 +19,6 @@ btnCounterElement.addEventListener("click", (e) => {
     console.log(img);
   } else if ((counter = 6)) {
     modalElement.style.display = "";
-
-    // console.log(modalElement);
-    // counter = 0;
-    // counterElement.textContent = counter;
-    // img.src = `images/vesalice_${counter}.png`;
-    // console.log("you lost");
   }
 });
 
