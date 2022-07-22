@@ -21,6 +21,41 @@ img {
 .container img {
   display: block;
 }
+.word {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.letter {
+  list-style: none;
+  margin: 5px;
+}
+
+.btn-letters {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 50%;
+}
+
+.allLetters {
+  background-color: #333366;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  width: 30px;
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.allLetters:active {
+  background-color: #464693;
+}
 
 .btn {
   width: 200px;
