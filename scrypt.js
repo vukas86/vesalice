@@ -8,6 +8,7 @@ const btnLetterElement = document.querySelector(".btn-letters");
 const wordElement = document.querySelector(".word");
 
 let img = document.createElement("img");
+let counter = 6;
 
 const lettersAlphabet = [
   "a",
@@ -41,18 +42,7 @@ const lettersAlphabet = [
   "џ",
   "ш",
 ];
-const hiddenWord = "kрагујевац";
-const hiddenWordArray = hiddenWord.split("").splice(0, hiddenWord.length, "_");
-
-const displayHiddenWord = () => {
-  hiddenWordArray.map((e) => {
-    let letter = document.createElement("li");
-    letter.classList.add("letter");
-    letter.innerHTML = e;
-    wordElement.appendChild(letter);
-  });
-};
-displayHiddenWord();
+const hiddenWord = "мали мокри луг";
 
 (function () {
   lettersAlphabet.map((let) => {
@@ -65,12 +55,10 @@ displayHiddenWord();
   });
 })();
 
-let counter = 0;
-
 btnCounterElement.addEventListener("click", (e) => {
   e.preventDefault();
-  if (counter <= 5) {
-    counter++;
+  if (counter > 0) {
+    counter--;
     counterElement.textContent = `Број поена: ${counter}`;
     document.querySelector(".firstImage").style.display = "none";
     img.src = `images/vesalice_${counter}.png`;
@@ -83,29 +71,39 @@ btnCounterElement.addEventListener("click", (e) => {
 btnResetElement.addEventListener("click", (e) => {
   e.preventDefault();
   modalElement.style.display = "none";
-  counter = 0;
+  counter = 6;
   counterElement.textContent = `Број поена: ${counter}`;
   img.src = `images/vesalice_${counter}.png`;
 });
 
 const checkLetters = () => {
+  hiddenWord.split("").map((e) => {
+    e.includes(" ") ? (e = " ") : (e = "_");
+
+    let letter = document.createElement("li");
+    letter.classList.add("letter");
+    letter.innerHTML = e;
+    wordElement.appendChild(letter);
+  });
+
   btnLetterElement.addEventListener("click", (e) => {
     e.preventDefault();
     const chosenLetter = e.target.innerHTML;
-    console.log(hiddenWordArray, chosenLetter);
-    if (hiddenWordArray.includes(chosenLetter)) {
-      console.log("yes");
-    } else {
-      if (counter <= 5) {
-        counter++;
-        counterElement.textContent = `Број поена: ${counter}`;
-        document.querySelector(".firstImage").style.display = "none";
-        img.src = `images/vesalice_${counter}.png`;
-        containerElement.prepend(img);
-      } else if (counter === 6) {
-        modalElement.style.display = "";
-      }
-    }
+    console.log(hiddenWord, chosenLetter);
+
+    // if (hiddenWordArray.includes(chosenLetter)) {
+    //   console.log("yes");
+    // } else {
+    //   if (counter > 0) {
+    //     counter--;
+    //     counterElement.textContent = `Број поена: ${counter}`;
+    //     document.querySelector(".firstImage").style.display = "none";
+    //     img.src = `images/vesalice_${counter}.png`;
+    //     containerElement.prepend(img);
+    //   } else if (counter === 0) {
+    //     modalElement.style.display = "";
+    //   }
+    // }
   });
 };
 
