@@ -12,7 +12,7 @@ let counter = 6;
 let hiddenWordArray = [];
 
 const lettersAlphabet = [
-  "a",
+  "а",
   "б",
   "в",
   "г",
@@ -43,16 +43,6 @@ const lettersAlphabet = [
   "џ",
   "ш",
 ];
-const hiddenWord = "стара пазова";
-
-hiddenWord.split("").map((e) => {
-  e.includes(" ") ? (e = " ") : (e = "_");
-
-  let letter = document.createElement("li");
-  letter.classList.add("letter");
-  letter.innerHTML = e;
-  wordElement.appendChild(letter);
-});
 
 (function () {
   lettersAlphabet.map((let) => {
@@ -65,6 +55,8 @@ hiddenWord.split("").map((e) => {
   });
 })();
 
+const hiddenWord = "стара пазова";
+
 btnResetElement.addEventListener("click", (e) => {
   e.preventDefault();
   modalElement.style.display = "none";
@@ -74,15 +66,32 @@ btnResetElement.addEventListener("click", (e) => {
 });
 
 const checkLetters = () => {
-  const liItem = document.querySelector(".word");
-  console.log(liItem);
+  hiddenWord.split("").map((e) => {
+    e.includes(" ") ? (e = " ") : (e = "_");
+
+    let letter = document.createElement("li");
+    letter.classList.add("letter");
+    letter.innerHTML = e;
+    wordElement.appendChild(letter);
+  });
+
+  const ul = document.querySelector(".word");
+  const liItems = ul.getElementsByTagName("li");
+
+  for (let i = 0; i <= liItems.length - 1; i++) {
+    hiddenWordArray.push(liItems[i].innerText);
+  }
+  console.log(hiddenWordArray);
 
   btnLetterElement.addEventListener("click", (e) => {
     e.preventDefault();
     const chosenLetter = e.target.innerHTML;
 
     if (hiddenWord.includes(chosenLetter)) {
-      console.log("yes");
+      let i = hiddenWord.indexOf(chosenLetter);
+      hiddenWordArray[i] = chosenLetter;
+      liItems[i].innerText = chosenLetter;
+      console.log(hiddenWordArray);
     } else {
       if (counter <= 6 && counter > 0) {
         counter--;
