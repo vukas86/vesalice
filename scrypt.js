@@ -76,8 +76,7 @@ btnResetElement.addEventListener("click", (e) => {
 const checkLetters = () => {
   const liItem = document.querySelector(".word");
   console.log(liItem);
-  let li = liItem[0].getElementsByTagName("li");
-  console.log(li);
+
   btnLetterElement.addEventListener("click", (e) => {
     e.preventDefault();
     const chosenLetter = e.target.innerHTML;
