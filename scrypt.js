@@ -63,6 +63,7 @@ btnResetElement.addEventListener("click", (e) => {
   counter = 6;
   counterElement.textContent = `Број поена: ${counter}`;
   img.src = `images/vesalice_${counter}.png`;
+  window.location.reload();
 });
 
 const checkLetters = () => {
@@ -81,17 +82,24 @@ const checkLetters = () => {
   for (let i = 0; i <= liItems.length - 1; i++) {
     hiddenWordArray.push(liItems[i].innerText);
   }
-  console.log(hiddenWordArray);
 
   btnLetterElement.addEventListener("click", (e) => {
     e.preventDefault();
     const chosenLetter = e.target.innerHTML;
 
     if (hiddenWord.includes(chosenLetter)) {
-      let i = hiddenWord.indexOf(chosenLetter);
-      hiddenWordArray[i] = chosenLetter;
-      liItems[i].innerText = chosenLetter;
-      console.log(hiddenWordArray);
+      let newArray = hiddenWord.split("");
+      newArray.forEach((el, indx) => {
+        if (newArray[indx] === chosenLetter) {
+          hiddenWordArray[indx] = chosenLetter;
+          liItems[indx].innerText = chosenLetter;
+        }
+        if (!hiddenWordArray.includes("_")) {
+          document.querySelector(".modal-sign").innerText = "Победа!🏆";
+          // modalElement.style.backgroundColor = "blue";
+          modalElement.style.display = "";
+        }
+      });
     } else {
       if (counter <= 6 && counter > 0) {
         counter--;
@@ -99,7 +107,8 @@ const checkLetters = () => {
         document.querySelector(".firstImage").style.display = "none";
         img.src = `images/vesalice_${counter}.png`;
         containerElement.prepend(img);
-      } else if (counter === 0) {
+      }
+      if (counter === 0) {
         modalElement.style.display = "";
       }
     }
