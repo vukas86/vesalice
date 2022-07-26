@@ -1,6 +1,7 @@
 const btnCounterElement = document.getElementById("btn-counter");
 const btnResetElement = document.getElementById("btn-reset");
 let counterElement = document.querySelector(".counter");
+let pointsElement = document.querySelector(".points");
 const containerElement = document.querySelector(".container");
 const modalElement = document.querySelector(".overlay");
 modalElement.style.display = "none";
@@ -9,6 +10,7 @@ const wordElement = document.querySelector(".word");
 
 let img = document.createElement("img");
 let counter = 6;
+let points = 0;
 let hiddenWordArray = [];
 
 const lettersAlphabet = [
@@ -87,32 +89,41 @@ const checkLetters = () => {
     e.preventDefault();
     const chosenLetter = e.target.innerHTML;
 
-    if (hiddenWord.includes(chosenLetter)) {
-      let newArray = hiddenWord.split("");
-      newArray.forEach((el, indx) => {
-        if (newArray[indx] === chosenLetter) {
-          hiddenWordArray[indx] = chosenLetter;
-          liItems[indx].innerText = chosenLetter;
+    if (!e.target.classList.contains("btn-letters")) {
+      e.target.classList.add("disabled");
+      if (hiddenWord.includes(chosenLetter)) {
+        let newArray = hiddenWord.split("");
+        newArray.forEach((el, indx) => {
+          if (newArray[indx] === chosenLetter) {
+            points++;
+            pointsElement.textContent = `Број поена: ${points}`;
+            hiddenWordArray[indx] = chosenLetter;
+            liItems[indx].innerText = chosenLetter;
+          }
+          if (!hiddenWordArray.includes("_")) {
+            document.querySelector(".modal-sign").innerText = "Победа!🏆";
+            document.querySelector(".modal-points").innerText = `Освојио си ${
+              points + 10
+            } поен`;
+            modalElement.style.display = "";
+          }
+        });
+      } else {
+        if (counter <= 6 && counter > 0) {
+          counter--;
+          counterElement.textContent = `Број поена: ${counter}`;
+          document.querySelector(".firstImage").style.display = "none";
+          img.src = `images/vesalice_${counter}.png`;
+          containerElement.prepend(img);
         }
-        if (!hiddenWordArray.includes("_")) {
-          document.querySelector(".modal-sign").innerText = "Победа!🏆";
-          // modalElement.style.backgroundColor = "blue";
+        if (counter === 0) {
           modalElement.style.display = "";
+          document.querySelector(".modal-points").style.display = "none";
         }
-      });
-    } else {
-      if (counter <= 6 && counter > 0) {
-        counter--;
-        counterElement.textContent = `Број поена: ${counter}`;
-        document.querySelector(".firstImage").style.display = "none";
-        img.src = `images/vesalice_${counter}.png`;
-        containerElement.prepend(img);
-      }
-      if (counter === 0) {
-        modalElement.style.display = "";
       }
     }
   });
 };
 
 checkLetters();
+console.log(document.querySelector(".allLetters"));

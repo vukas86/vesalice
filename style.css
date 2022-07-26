@@ -109,7 +109,7 @@ img {
 .modal h2 {
   font-size: 32px;
   font-family: "Comic Neue", cursive;
-  margin-bottom: 50px;
+  margin-bottom: 35px;
 }
 
 .overlay {
@@ -122,4 +122,18 @@ img {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(3px);
   z-index: 5;
+}
+
+.counter {
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.modal-points {
+  /* margin-bottom: 20px; */
+  font-size: 24px;
 }
