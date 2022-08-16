@@ -57,7 +57,10 @@ const lettersAlphabet = [
   });
 })();
 
-const hiddenWord = "стара пазова";
+const hiddenWordsArray = ["београд", "јагодина", "горњи милановац"];
+let randomHiddenWord =
+  hiddenWordsArray[Math.floor(Math.random() * hiddenWordsArray.length)];
+console.log(randomHiddenWord);
 
 btnResetElement.addEventListener("click", (e) => {
   e.preventDefault();
@@ -68,15 +71,29 @@ btnResetElement.addEventListener("click", (e) => {
   window.location.reload();
 });
 
-const checkLetters = () => {
-  hiddenWord.split("").map((e) => {
+const renderHiddenWord = () => {
+  randomHiddenWord.split("").map((e) => {
     e.includes(" ") ? (e = " ") : (e = "_");
-
     let letter = document.createElement("li");
     letter.classList.add("letter");
     letter.innerHTML = e;
     wordElement.appendChild(letter);
   });
+};
+
+const restartGame = () => {
+  renderHiddenWord();
+  localStorage.getItem("points");
+  localStorage.getItem("counter");
+};
+
+const btnEvent = (e) => {
+  e.preventDefault();
+  console.log(e.target);
+};
+
+const checkLetters = () => {
+  renderHiddenWord();
 
   const ul = document.querySelector(".word");
   const liItems = ul.getElementsByTagName("li");
@@ -91,21 +108,14 @@ const checkLetters = () => {
 
     if (!e.target.classList.contains("btn-letters")) {
       e.target.classList.add("disabled");
-      if (hiddenWord.includes(chosenLetter)) {
-        let newArray = hiddenWord.split("");
+      if (randomHiddenWord.includes(chosenLetter)) {
+        let newArray = randomHiddenWord.split("");
         newArray.forEach((el, indx) => {
           if (newArray[indx] === chosenLetter) {
             points++;
             pointsElement.textContent = `Број поена: ${points}`;
             hiddenWordArray[indx] = chosenLetter;
             liItems[indx].innerText = chosenLetter;
-          }
-          if (!hiddenWordArray.includes("_")) {
-            document.querySelector(".modal-sign").innerText = "Победа!🏆";
-            document.querySelector(".modal-points").innerText = `Освојио си ${
-              points + 10
-            } поен`;
-            modalElement.style.display = "";
           }
         });
       } else {
@@ -122,8 +132,23 @@ const checkLetters = () => {
         }
       }
     }
+    window.localStorage.setItem("points", `${points}`);
+    window.localStorage.setItem("counter", `${counter}`);
+
+    if (!hiddenWordArray.includes("_")) {
+      wordElement.innerHTML = "";
+      const btnEl = document.getElementsByClassName("allLetters");
+      for (el of btnEl) {
+        el.classList.remove("disabled");
+      }
+      window.localStorage.getItem("points", `${points}`);
+      window.localStorage.getItem("counter", `${counter}`);
+      pointsElement.textContent = `Број поена: ${points + 10}`;
+      renderHiddenWord();
+      randomHiddenWord;
+      btnLetterElement.addEventListener("click", btnEvent(e));
+    }
   });
 };
 
 checkLetters();
-console.log(document.querySelector(".allLetters"));
