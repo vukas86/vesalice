@@ -81,17 +81,6 @@ const renderHiddenWord = () => {
   });
 };
 
-const restartGame = () => {
-  renderHiddenWord();
-  localStorage.getItem("points");
-  localStorage.getItem("counter");
-};
-
-const btnEvent = (e) => {
-  e.preventDefault();
-  console.log(e.target);
-};
-
 const checkLetters = () => {
   renderHiddenWord();
 
@@ -136,17 +125,16 @@ const checkLetters = () => {
     window.localStorage.setItem("counter", `${counter}`);
 
     if (!hiddenWordArray.includes("_")) {
+      alert("Miki milanedasido");
       wordElement.innerHTML = "";
+      hiddenWordArray = [];
+      console.log(hiddenWordArray);
       const btnEl = document.getElementsByClassName("allLetters");
       for (el of btnEl) {
         el.classList.remove("disabled");
       }
-      window.localStorage.getItem("points", `${points}`);
-      window.localStorage.getItem("counter", `${counter}`);
       pointsElement.textContent = `Број поена: ${points + 10}`;
       renderHiddenWord();
-      randomHiddenWord;
-      btnLetterElement.addEventListener("click", btnEvent(e));
     }
   });
 };
