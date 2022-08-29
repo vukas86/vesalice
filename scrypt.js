@@ -13,6 +13,9 @@ let counter = 6;
 let points = 0;
 let hiddenWordArray = [];
 
+const ul = document.querySelector(".word");
+const liItems = ul.getElementsByTagName("li");
+
 const lettersAlphabet = [
   "а",
   "б",
@@ -60,7 +63,6 @@ const lettersAlphabet = [
 const hiddenWordsArray = ["београд", "јагодина", "горњи милановац"];
 let randomHiddenWord =
   hiddenWordsArray[Math.floor(Math.random() * hiddenWordsArray.length)];
-console.log(randomHiddenWord);
 
 btnResetElement.addEventListener("click", (e) => {
   e.preventDefault();
@@ -79,18 +81,14 @@ const renderHiddenWord = () => {
     letter.innerHTML = e;
     wordElement.appendChild(letter);
   });
-};
-
-const checkLetters = () => {
-  renderHiddenWord();
-
-  const ul = document.querySelector(".word");
-  const liItems = ul.getElementsByTagName("li");
-
   for (let i = 0; i <= liItems.length - 1; i++) {
     hiddenWordArray.push(liItems[i].innerText);
   }
+};
 
+renderHiddenWord();
+
+const checkLetters = () => {
   btnLetterElement.addEventListener("click", (e) => {
     e.preventDefault();
     const chosenLetter = e.target.innerHTML;
@@ -121,11 +119,11 @@ const checkLetters = () => {
         }
       }
     }
-    window.localStorage.setItem("points", `${points}`);
+    // window.localStorage.setItem("points", `${points}`);
     window.localStorage.setItem("counter", `${counter}`);
 
     if (!hiddenWordArray.includes("_")) {
-      alert("Miki milanedasido");
+      window.localStorage.setItem("points", `${points}`);
       wordElement.innerHTML = "";
       hiddenWordArray = [];
       console.log(hiddenWordArray);
@@ -133,7 +131,9 @@ const checkLetters = () => {
       for (el of btnEl) {
         el.classList.remove("disabled");
       }
-      pointsElement.textContent = `Број поена: ${points + 10}`;
+
+      randomHiddenWord =
+        hiddenWordsArray[Math.floor(Math.random() * hiddenWordsArray.length)];
       renderHiddenWord();
     }
   });
