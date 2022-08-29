@@ -123,7 +123,7 @@ const checkLetters = () => {
     window.localStorage.setItem("counter", `${counter}`);
 
     if (!hiddenWordArray.includes("_")) {
-      window.localStorage.setItem("points", `${points}`);
+      window.localStorage.setItem("points", `${points + 10}`);
       wordElement.innerHTML = "";
       hiddenWordArray = [];
       console.log(hiddenWordArray);
@@ -131,7 +131,6 @@ const checkLetters = () => {
       for (el of btnEl) {
         el.classList.remove("disabled");
       }
-
       randomHiddenWord =
         hiddenWordsArray[Math.floor(Math.random() * hiddenWordsArray.length)];
       renderHiddenWord();
