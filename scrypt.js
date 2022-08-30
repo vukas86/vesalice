@@ -60,9 +60,31 @@ const lettersAlphabet = [
   });
 })();
 
-const hiddenWordsArray = ["београд", "јагодина", "горњи милановац"];
+const hiddenWordsArray = [
+  "београд",
+  "јагодина",
+  "горњи милановац",
+  "баточина",
+  "књажевац",
+  "житорађе",
+  "чантавир",
+  "куршумлија",
+];
 let randomHiddenWord =
   hiddenWordsArray[Math.floor(Math.random() * hiddenWordsArray.length)];
+
+const openModal = () => {
+  modalElement.style.display = "";
+  document.querySelector(".modal-points").style.display = "none";
+};
+
+const resetGame = () => {
+  modalElement.style.display = "none";
+  counter = 6;
+  counterElement.textContent = `Број поена: ${counter}`;
+  img.src = `images/vesalice_${counter}.png`;
+  window.location.reload();
+};
 
 btnResetElement.addEventListener("click", (e) => {
   e.preventDefault();
@@ -114,19 +136,19 @@ const checkLetters = () => {
           containerElement.prepend(img);
         }
         if (counter === 0) {
-          modalElement.style.display = "";
-          document.querySelector(".modal-points").style.display = "none";
+          openModal();
         }
       }
     }
-    // window.localStorage.setItem("points", `${points}`);
+
     window.localStorage.setItem("counter", `${counter}`);
 
     if (!hiddenWordArray.includes("_")) {
       window.localStorage.setItem("points", `${points + 10}`);
       wordElement.innerHTML = "";
       hiddenWordArray = [];
-      console.log(hiddenWordArray);
+      points = points + 10;
+
       const btnEl = document.getElementsByClassName("allLetters");
       for (el of btnEl) {
         el.classList.remove("disabled");
@@ -139,3 +161,10 @@ const checkLetters = () => {
 };
 
 checkLetters();
+
+document.addEventListener("keydown", (e) => {
+  e.preventDefault();
+  if (e.key === "Escape") {
+    openModal();
+  }
+});
